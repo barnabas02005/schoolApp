@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Class Submission with Password Hash</title>
+  </head>
+  <body>
+    <form id="classForm">
+      <label>Class Name: <input type="text" id="classname" required /></label
+      ><br />
+      <label>Password: <input type="password" id="password" required /></label
+      ><br />
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      document
+        .getElementById("classForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const className = document.getElementById("classname").value;
+          const password = document.getElementById("password").value;
+
+          // Hash the password client-side
+          const passwordHash = await hashPassword(password);
+
+          // Send the class name and hashed password to the server
+          fetch("save_class.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              classname: className,
+              password_hash: passwordHash,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data.message);
+              document.getElementById("classForm").reset();
+            })
+            .catch((error) => console.error("Error:", error));
+        });
+
+      // Basic client-side password hashing function (SHA-256)
+      async function hashPassword(password) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(password);
+        const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer)); // Convert buffer to byte array
+        return btoa(String.fromCharCode(...hashArray)); // Convert bytes to base64
+      }
+    </script>
+  </body>
+</html>
