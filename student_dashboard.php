@@ -54,72 +54,6 @@ if (isset($_SESSION['user_id'])) {
   <!-- <script src="route.js" defer></script> -->
   <link rel="stylesheet" href="assets/css/stdn.css">
   <style>
-    /* body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      width: 100%;
-      background-color: #eee;
-      font-family: Helvetica, Arial, sans-serif;
-      flex-direction: column;
-    }
-
-    .greeting {
-      font-size: 2.4rem;
-      color: #333;
-    }
-
-    ul {
-      list-style-type: none;
-      padding: 0;
-      cursor: pointer;
-    }
-
-    .custom-radio input[type="radio"] {
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      position: absolute;
-      opacity: 0;
-    }
-
-    .custom-radio {
-      display: flex;
-      margin: 5px;
-      border: 2px solid #007bff;
-      border-radius: 12px;
-      padding: 0px;
-      cursor: pointer;
-      transition: background-color 0.3s, color 0.3s;
-      font-weight: bold;
-    }
-
-    .custom-radio span {
-      color: #007bff;
-      border-radius: inherit;
-      padding: 13px 20px;
-      width: 100%;
-      height: 100%;
-    }
-
-    .custom-radio:hover {
-      background-color: #007bff;
-      color: white;
-    }
-
-    .custom-radio:hover>span {
-      color: #FFFFFF;
-    }
-
-    .custom-radio input[type="radio"]:checked {
-      border: none;
-    }
-
-    .custom-radio input[type="radio"]:checked+span {
-      background-color: #007bff;
-      color: white;
-    } */
   </style>
 </head>
 
@@ -238,6 +172,11 @@ if (isset($_SESSION['user_id'])) {
                       ?>
                     </div>
                   </div>
+                  <?php if ($row['type'] != "write") { ?>
+                    <div class="open_txt">
+                      <span>To continue the review, please select an option.</span>
+                    </div>
+                  <?php } ?>
                   <div class="action-btns">
                     <div class="act-btn previous" onclick="prevStep()">
                       <button type="button">
@@ -276,11 +215,6 @@ if (isset($_SESSION['user_id'])) {
                       </div>
                     <?php } ?>
                   </div>
-                  <?php if ($row['type'] != "write") { ?>
-                    <div class="open_txt">
-                      <span>To continue the review, please select an option.</span>
-                    </div>
-                  <?php } ?>
                 </div>
             <?php
                 $countStep++;

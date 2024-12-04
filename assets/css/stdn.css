@@ -72,11 +72,11 @@ main .all_content {
 .greet span {
   color: var(--dark-text);
   font-family: "Cormorant Garamond";
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 540;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  /* overflow: hidden; */
+  /* text-overflow: ellipsis; */
+  /* white-space: nowrap; */
   display: block;
   width: 98%;
   text-align: center;
@@ -183,10 +183,7 @@ main .all_content {
   display: flex;
   justify-content: center;
   margin-top: 20px;
-  position: fixed;
-  left: 50%;
-  bottom: 8%;
-  transform: translate(-50%, 50%);
+  position: relative;
   border-radius: 18px;
   padding: 8px 8px;
 }
@@ -559,8 +556,7 @@ main .all_content {
     position: relative;
   }
   .action-btns {
-    position: absolute;
-    bottom: -70px;
+    position: relative;
     width: auto;
     max-width: 500px;
   }
