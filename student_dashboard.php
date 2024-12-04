@@ -289,6 +289,32 @@ if (isset($_SESSION['user_id'])) {
             ?>
           </div>
         </form>
+
+        <div class="show_review_modal" id="showReviewModal">
+          <div class="modal-box">
+
+            <div class="modal-box-up">
+              <div class="close-sec">
+                <div class="logout-btn">
+                  <span>Logout</span>
+                </div>
+              </div>
+              <div class="icon">
+                <img src="assets/icon/Animation - 1733316006168.gif" alt="success spinner">
+              </div>
+              <div class="txt">
+                <span>Your feedback has been captured with precision —thank you for sharing your thoughts!</span>
+              </div>
+            </div>
+            <div class="modal-box-down">
+              <div class="new-review">
+                <button id="newReview">
+                  <span>Start a new review</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   </div>
@@ -437,25 +463,6 @@ if (isset($_SESSION['user_id'])) {
         .then(data => {
           console.log(data);
           showReviewModal();
-          //reset the form and go back to subject selection
-          form.reset();
-          steps.forEach(step => {
-            // step.classList.remove('active');
-            step.classList.remove('active');
-            if (!isAllStepActiveRemoved) {
-              isAllStepActiveRemoved = true;
-            }
-          });
-          if (isAllStepActiveRemoved) {
-            // steps[0].classList.add("active");'
-            currentStep = 1;
-            steps[0].classList.add('active');
-            // Update the browser's history state
-            history.pushState({
-              step: currentStep
-            }, null, `?step=${currentStep}`);
-            // Add text // Do you want to review another subject //
-          }
         })
         .catch(error => console.error("Error:", error));
     }
@@ -489,7 +496,41 @@ if (isset($_SESSION['user_id'])) {
 
 
     function showReviewModal() {
+      document.getElementById('showReviewModal').classList.add('active');
 
+      const newReviewBtn = document.getElementById('newReview');
+      const form = document.getElementById("multiStepForm");
+
+      if (newReviewBtn) {
+        newReviewBtn.addEventListener('click', async () => {
+          //reset the form and go back to subject selection
+          form.reset();
+          steps.forEach(step => {
+            // step.classList.remove('active');
+            step.classList.remove('active');
+            if (!isAllStepActiveRemoved) {
+              isAllStepActiveRemoved = true;
+            }
+          });
+          if (isAllStepActiveRemoved) {
+            // steps[0].classList.add("active");'
+            currentStep = 1;
+            steps[0].classList.add('active');
+            // Update the browser's history state
+            history.pushState({
+              step: currentStep
+            }, null, `?step=${currentStep}`);
+
+            // Remove the review modal
+            removeReviewModal();
+            // Add text // Do you want to review another subject //
+          }
+        });
+      }
+    }
+
+    function removeReviewModal() {
+      document.getElementById('showReviewModal').classList.remove('active');
     }
   </script>
 </body>
