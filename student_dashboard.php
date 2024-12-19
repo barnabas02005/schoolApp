@@ -79,7 +79,9 @@ if (isset($_SESSION['user_id'])) {
               </div>
               <ul id="subjectList">
                 <?php foreach ($subjectData as $subject): ?>
-                  <li class="a_item" style="--subject-theme: <?= $subject['theme'] ?>" data-subj-id="<?= htmlspecialchars($subject['id']); ?>" data-class-id="<?= htmlspecialchars($studentData['class']); ?>" onclick="nextStep()" data-real-val="<?= htmlspecialchars($subject['id']); ?>" data-input-val="subjectId"><?= $subject['subject_name']; ?></li>
+                  <li class="a_item" style="--subject-theme: <?= $subject['theme']; ?>" data-subj-id="<?= htmlspecialchars($subject['id']); ?>" data-class-id="<?= htmlspecialchars($studentData['class']); ?>" onclick="nextStep()" data-real-val="<?= htmlspecialchars($subject['id']); ?>" data-input-val="subjectId">
+                  <?= $subject['subject_name']; ?>
+                </li>
                 <?php endforeach; ?>
               </ul>
             </div>

@@ -8,9 +8,9 @@ include("function_room.php");
 $data = json_decode(file_get_contents("php://input"), true);
 
 // Check if input is properly set
-if (isset($data['login'], $data['password_hash'])) {
+if (isset($data['login'], $data['password'])) {
   $login = $data['login'];
-  $password_hash = $data['password_hash'];
+  $password = hashString($data['password']);
 
   // Prepare a statement to check if login exists
   $check_stmt = mysqli_prepare($conn, "SELECT id FROM teacher WHERE email = ? OR mobilenumber = ?");
@@ -32,7 +32,7 @@ if (isset($data['login'], $data['password_hash'])) {
       $stmt = mysqli_prepare($conn, "SELECT id FROM teacher WHERE (email = ? OR mobilenumber = ?) AND `password` = ?");
       if ($stmt) {
         // Bind parameters to placeholders
-        mysqli_stmt_bind_param($stmt, "sss", $login, $login, $password_hash);
+        mysqli_stmt_bind_param($stmt, "sss", $login, $login, $password);
 
         // Execute the statement
         mysqli_stmt_execute($stmt);
@@ -58,23 +58,23 @@ if (isset($data['login'], $data['password_hash'])) {
             $_SESSION['teach_classid'] = getClassId($conn, $teacher_id);
           }
         } else {
-          echo json_encode(["failure" => true, "message" => "Incorrect password for this account!"]);
+          echo json_encode(["failure" => true, "message" => "Incorrect password for this account!", "ww" => "password"]);
         }
 
         // Free resources and close the statement
         mysqli_stmt_free_result($stmt);
         mysqli_stmt_close($stmt);
       } else {
-        echo json_encode(["failure" => true, "message" => "Database error!"]);
+        echo json_encode(["failure" => true, "message" => "Database error!", "ww" => "both"]);
       }
     } else {
-      echo json_encode(["failure" => true, "message" => "No account exists with this login!"]);
+      echo json_encode(["failure" => true, "message" => "No account exists with this login!", "ww" => "both"]);
     }
   } else {
-    echo json_encode(["failure" => true, "message" => "Database error!"]);
+    echo json_encode(["failure" => true, "message" => "Database error!", "ww" => "both"]);
   }
 } else {
-  echo json_encode(["failure" => true, "message" => "Invalid input!"]);
+  echo json_encode(["failure" => true, "message" => "Invalid input!", "ww" => "both"]);
 }
 
 // Close the database connection

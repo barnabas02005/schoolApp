@@ -32,22 +32,63 @@ if ($getClassResult && mysqli_num_rows($getClassResult) > 0) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add Topic | <?php echo $dataSubject['subject_name']; ?></title>
-  <script src="http://localhost/classhelp/route.js" defer></script>
+  <link rel="stylesheet" href="/classhelp/assets/css/auth.css">
+  <script src="route.js" defer></script>
 </head>
 
 <body>
-  <h1>Add a Topic for <?php echo htmlspecialchars($dataSubject['subject_name']); ?> in <?php echo htmlspecialchars($dataClass['classname']); ?></h1>
+  <div class="container">
+    <header>
+    </header>
+    <main>
+      <div class="welcome_txt">
+        <span>Add a Topic for <?php echo htmlspecialchars($dataSubject['subject_name']); ?> in <?php echo htmlspecialchars($dataClass['classname']); ?></span>
+      </div>
+      <form action="#" id="addTopicForm" method="post">
+        <div class="error-box">
+          <span id="errorMessage">
+            You've entered an invalid password.
+          </span>
+        </div>
+        <div class="input-box active">
+          <input type="text" name="" id="login" autocomplete="off" required>
+          <span>Topic Title*</span>
+        </div>
+        <div class="input-box active">
+          <div id="textarea-box" name="review[<?= $data['id'] ?>]" class="textarea-box" contenteditable="true" role="textbox"></div>
+          <span>Description*</span>
+        </div>
+        <div class="submit-btn active">
+          <button type="button">Add Topic</button>
+        </div>
+      </form>
+
+      <!-- <div class="foot_content">
+        <div class="cont">
+          <span>Terms of use</span>
+        </div>
+        <span>|</span>
+        <div class="cont">
+          <span>Privacy policy</span>
+        </div>
+      </div> -->
+    </main>
+  </div>
+  <!-- <h1>Add a Topic for <?php echo htmlspecialchars($dataSubject['subject_name']); ?> in <?php echo htmlspecialchars($dataClass['classname']); ?></h1> -->
   <!-- You can add your form or topic input logic here -->
-  <form id="addTopicForm">
+  <!-- <form id="addTopicForm">
     <input type="hidden" id="subjectId" value="<?php echo htmlspecialchars($dataSubject['id']); ?>" />
     <input type="hidden" id="classId" value="<?php echo htmlspecialchars($dataClass['id']); ?>" />
 
     <label>Topic Title: <input type="text" id="title" required /></label><br /><br />
     <label>Description: <textarea id="description"></textarea></label><br /><br />
     <button type="submit">Submit</button>
-  </form>
+  </form> -->
 
+  <script src="/classhelp/assets/js/resetForm.js"></script>
+  <script src="/classhelp/assets/js/form-step.js"></script>
   <script>
+    resetForm("addTopicForm");
     document.getElementById("addTopicForm").addEventListener("submit", async function(e) {
       e.preventDefault();
 

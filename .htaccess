@@ -1,8 +1,14 @@
-#RewriteEngine On
-#RewriteBase /classhelp/
+# Enable the rewrite engine
+RewriteEngine On
+# Rewrite base directory
+RewriteBase /classhelp/
+
+# Exclude static resources like CSS, JS, and images
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 
 # Capture URLs like /classhelp/filename/key/value
-#RewriteRule ^([a-zA-Z0-9_-]+)/([^/]+)/([^/]+)$ $1.php?$2=$3 [L,QSA]
+RewriteRule ^([a-zA-Z0-9_-]+)/([^/]+)/([^/]+)$ $1.php?$2=$3 [L,QSA]
 
 # Capture URLs like /classhelp/filename/key1/value1/key2/value2
-#RewriteRule ^([a-zA-Z0-9_-]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)$ $1.php?$2=$3&$4=$5 [L,QSA]
+RewriteRule ^([a-zA-Z0-9_-]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)$ $1.php?$2=$3&$4=$5 [L,QSA]
